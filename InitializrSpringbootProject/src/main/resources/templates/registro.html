@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="es">
+    <head>
+        <!-- <meta charset="ISO-8859-1">-->
+        <meta charset="UTF-8">
+        <title>Registro de Pacientes</title>
+        <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css}" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <link rel="stylesheet" th:href="@{/css/formulario.css}" />
+        <link rel="shortcut icon" th:href="@{https://cdn4.iconfinder.com/data/icons/human-civilization-vol-1/512/medical_care_health_medicine-256.png}">
+        <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css}" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+    </head>
+    <body>
+
+        <section>
+            <nav th:replace= "/fragments/navbar :: nav"></nav>
+        </section>
+
+        <div class="align-items-center">
+            <a  th:href="@{/}"><img width="240" height="192"
+                                   th:src="@{/imagen/imagen-registroPaciente.png}"
+                                   alt="Pagina principal"></a>
+        </div>
+        <h3 class=" text-center" >Complete el Formulario de Paciente</h3>
+
+
+
+        <div class="container-fluid m-5 contenedor">
+
+            <!-- cuando una persona haga clic en guardar lo que se dispara es una action, se dispara al servidor
+            y se ejecuta atravez de una url /autor/registro y esto sucede atravez de una peticion post,
+            el input va a enviar datos a travez de una variable, esa variable va a viajar con un nombre 
+            que se lo damos a travez del atributo name, tiene que coincider con el nombre que llega como parametro
+            en nuestro controlador -->
+            <form class="formulario" th:action="@{/paciente/registrar}" method="POST" enctype="multipart/form-data">
+
+                <div class="form-group my-3"> 
+                    <label class="mb-2">Nombre</label> 
+                    <!-- input es para ingresar el nombre del autor  -->
+                    <input type="text" class="form-control" name="nombre" placeholder="Ingrese su Nombre">
+                </div>
+                <!-- y un boton de tipo submit, que al ser presionado es el que va a enviar la informacion
+                para que nosotros podamos tomarla, guardarla o manipularla segun deseemos-->
+                <div class="form-group my-3"> 
+                    <label class="mb-2">Apellido</label> 
+
+                    <input type="text" class="form-control" name="apellido" placeholder="Ingrese su Apellido">
+                </div>
+
+                <div class="form-group my-3"> 
+                    <label class="mb-2">Numero Dni</label> 
+
+                    <input type="text" class="form-control" name="dni" pattern="[0-9]{8}" required placeholder="Ingrese su Dni">
+                </div>
+
+                <div class="form-group my-3"> 
+                    <label class="mb-2">Sexo</label> 
+
+                    <input type="text" class="form-control" name="sexo" placeholder="Masculino o femenino">
+                </div>
+
+                <div class="form-group my-3"> 
+                    <label class="mb-2">Obra Social</label> 
+
+                    <input type="text" class="form-control" name="obraSocialPaciente" placeholder="Ingrese su obra social">
+                </div>
+
+                <div class="form-group my-3"> 
+                    <label class="mb-2">Numero de Afiliado</label> 
+
+                    <input type="text" class="form-control" name="numeroDeAfiliado" placeholder="Ingrese su numero afiliado">
+                </div>
+                
+                <div class="form-group my-3"> 
+                    <label class="mb-2">Email</label> 
+
+                    <input type="email" class="form-control" name="email" placeholder="example@gmail.com">
+                </div>
+
+                <div class="form-group my-3"> 
+                    <label class="mb-2">Imagen</label> 
+
+                    <input type="file" class="form-control" name="archivo" >
+                </div>
+
+                <div class="form-group my-3"> 
+                    <label class="mb-2">Telefono</label> 
+
+                    <input type="text" class="form-control" name="telefono" placeholder="celular o fijo" pattern="[0-9]{8}" required>
+                </div>
+                
+                <div class="form-group my-3"> 
+                    <label class="mb-2">Fecha de Nacimiento</label> 
+                    <input
+                        type="date"
+                        id="start"
+                        name="fecha"
+                        value="fecha"
+                        min="1920-01-01"
+                        max="2005-12-31"
+                        class="form-control"
+                        >
+                </div>
+
+                <div class="form-group my-3"> 
+                    <label class="mb-2">Contraseña</label> 
+
+                    <input type="password" class="form-control" name="password" placeholder="password">
+                </div>
+
+                <div class="form-group my-3"> 
+                    <label class="mb-2">Confirmar Contraseña</label> 
+
+                    <input type="password" class="form-control" name="password2" placeholder="password">
+                    <div class="invalid-feedback">Las contraseñas no coinciden.</div>
+                </div>
+
+                <div class="form-group my-3"> 
+                    <label class="mb-2">Motivo de Consulta</label> 
+
+                    <input type="text" class="form-control" name="motivoConsulta" placeholder="Ingrese su motivo de consulta">
+
+                </div>
+                <button type="submit" class="btn btn-primary mt-3 botones">REGISTRAR</button>
+
+                <p class="text-center text-muted mt-5 mb-0">�Ya tienes una cuenta? <a th:href="@{/login}"
+                                                                                      class="fw-bold text-body"><u>Iniciar Sesion</u></a></p>
+
+
+            </form>
+
+
+            <div th:if="${exito}!=null" class="card text-white bg-success mb-3 mt-3 mensajeExito" >
+                <div class="card-body">
+                    <h5 class="card-title">Exito!</h5>
+                    <p class="card-text" th:text="${exito}"></p>
+                </div>
+            </div>
+
+            <div th:if="${error}!=null" class="card text-white bg-danger mb-3 mensajeError" >
+                <div class="card-body">
+                    <h5 class="card-title">Error 👎</h5>
+                    <p class="card-text" th:text="${error}"></p>
+                </div>
+            </div>
+
+            <section class=" text-center container">
+                <div class="row mt-3">
+                    <div class="divVolver">
+                        <a th:href="@{/}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+
+
+    </body>
+    <div class="container">
+        <footer th:replace= "/fragments/footer :: footer"></footer>
+    </div>
+
+</html>
+
+
